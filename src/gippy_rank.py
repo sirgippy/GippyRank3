@@ -83,14 +83,6 @@ class Game:
 
         return 2**awayRating / (2**homeRating + 2**awayRating)
 
-    def location(self,team):
-        if self.neutral:
-            return 'neutral'
-        elif self.homeTeam == team:
-            return 'home'
-        else:
-            return 'away'
-
     def probabilityTeamWin(self,ratingSet,team):
         if self.homeTeam == team:
             return self.probabilityHomeWin(ratingSet)
