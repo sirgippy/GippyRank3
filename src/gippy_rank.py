@@ -108,15 +108,25 @@ class RatingSet:
         return newSet
 
 
-class Season:
-    def __init__(self):
-        pass
+def parseScoresFile(file):
+    games = []
+    with open(file,'r') as scoresFile:
+        for line in scoresFile:
+            awayTeam = line[10:38].strip()
+            awayScore = int(line[38:40].strip())
+            homeTeam = line[41:69].strip()
+            homeScore = int(line[69:71].strip())
+            if len(line) > 72:
+                neutral = True
+            else:
+                neutral = False
+            games.append(Game(awayTeam,awayScore,homeTeam,homeScore,neutral))
+    return games
 
-class TeamList:
-    @staticmethod
-    def parseTeamListFile(file):
-        teams = {}
-        with open(file,'r') as teamFile:
-            for line in teamFile:
-                teams[line.strip()] = Team(line.strip())
-        return teams
+
+def parseTeamListFile(file):
+    teams = {}
+    with open(file,'r') as teamFile:
+        for line in teamFile:
+            teams[line.strip()] = Team(line.strip())
+    return teams
