@@ -13,9 +13,9 @@ VOLATILITY = 0.1
 HOME_FIELD_ADVANTAGE = 0.3
 HFA_FACTOR = log2(1 + HOME_FIELD_ADVANTAGE)
 
-QUALITY_WIN_FACTOR = 0.05
-QUALITY_WIN_LOWER_BOUND = 7
-QUALITY_WIN_UPPER_BOUND = 24
+QWF = 0.05
+QWLB = 7
+QWUB = 24
 
 STRENGTH_OF_SCHEDULE_FACTOR = 0.1
 
@@ -41,12 +41,12 @@ class Game:
         self.neutral = neutral
 
     def getQwf(self, mov):
-        if mov >= QUALITY_WIN_UPPER_BOUND:
+        if mov >= QWUB:
             thisQwf = 0
-        elif mov <= QUALITY_WIN_LOWER_BOUND:
-            thisQwf = QUALITY_WIN_FACTOR
+        elif mov <= QWLB:
+            thisQwf = QWF
         else:
-            thisQwf = (1 - mov / (QUALITY_WIN_UPPER_BOUND - QUALITY_WIN_LOWER_BOUND)) * QUALITY_WIN_FACTOR
+            thisQwf = (1 - (mov -  QWLB) / (QWUB - QWLB)) * QWF
         return thisQwf
 
     def probability(self, ratingSet):
@@ -90,22 +90,33 @@ class Game:
             return self.probabilityAwayWin(ratingSet)
 
 
-
 class RatingSet:
     def __init__(self, teamList):
         self.ratings = {}
         self.teams = teamList
 
     def setRating(self, team, rating):
-        self.ratings[team] = rating
+        self.ratings[team.name] = rating
 
     def getRating(self, team):
-        return self.ratings[team]
+        return self.ratings[team.name]
 
     def spawn(self):
-        newSet = RatingSet(self.teamList)
-        for team in self.teamList:
-            newSet.ratings[team] = self.ratings[team] + random.normal(0, VOLATILITY)
+        newSet = RatingSet(self.teams)
+        for team in self.teams:
+            newSet.ratings[team.name] = self.ratings[team.name] + random.normal(0, VOLATILITY)
         return newSet
 
 
+class Season:
+    def __init__(self):
+        pass
+
+class TeamList:
+    @staticmethod
+    def parseTeamListFile(file):
+        teams = {}
+        with open(file,'r') as teamFile:
+            for line in teamFile:
+                teams[line.strip()] = Team(line.strip())
+        return teams
