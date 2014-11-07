@@ -107,21 +107,21 @@ class RatingSet:
             newSet.ratings[team.name] = self.ratings[team.name] + random.normal(0, VOLATILITY)
         return newSet
 
-
-def parseScoresFile(file):
-    games = []
-    with open(file,'r') as scoresFile:
-        for line in scoresFile:
-            awayTeam = line[10:38].strip()
-            awayScore = int(line[38:40].strip())
-            homeTeam = line[41:69].strip()
-            homeScore = int(line[69:71].strip())
-            if len(line) > 72:
-                neutral = True
-            else:
-                neutral = False
-            games.append(Game(awayTeam,awayScore,homeTeam,homeScore,neutral))
-    return games
+class GamesList:
+    def __init__(self,file):
+        games = []
+        with open(file,'r') as scoresFile:
+            for line in scoresFile:
+                awayTeam = line[10:38].strip()
+                awayScore = int(line[38:40].strip())
+                homeTeam = line[41:69].strip()
+                homeScore = int(line[69:71].strip())
+                if len(line) > 72:
+                    neutral = True
+                else:
+                    neutral = False
+                games.append(Game(awayTeam,awayScore,homeTeam,homeScore,neutral))
+        self.games = games
 
 
 def parseTeamListFile(file):
