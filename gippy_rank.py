@@ -9,9 +9,10 @@ PARENTS = 50
 SPAWN = 1
 TOTAL_SIZE = PARENTS * (1 + SPAWN)
 
-GENERATIONS = 5
+GENERATIONS = 100
 
-VOLATILITY = 0.1
+VOLATILITY = 0.25
+MUTATION_RATE = 0.1
 
 HOME_FIELD_ADVANTAGE = 0.3
 HFA_FACTOR = log2(1 + HOME_FIELD_ADVANTAGE)
@@ -95,8 +96,10 @@ class RatingSet:
 
     def spawn(self):
         newSet = RatingSet(self.teams)
+        newSet.ratings = self.ratings
         for team in self.teams:
-            newSet.ratings[team.name] = self.ratings[team.name] + random.normal(0, VOLATILITY)
+            if random.random() < MUTATION_RATE:
+                newSet.ratings[team] = self.ratings[team] + random.normal(0, VOLATILITY)
         return newSet
 
     def evaluateProbability(self,gamesList):
@@ -107,7 +110,7 @@ class RatingSet:
     def print(self):
         sortedRatings = sorted(self.ratings.items(), key=itemgetter(1), reverse=True)
         for rating in sortedRatings:
-            print(rating[0] + ' ' + rating[1])
+            print(rating[0] + ' ' + "{:.3f}".format(rating[1]))
 
 
 class GamesList:
@@ -138,8 +141,6 @@ class GamesList:
 
     def __iter__(self):
         return iter(self.games)
-
-
 
 
 class TeamList:
@@ -174,12 +175,13 @@ class RatingSetPool:
         rs = RatingSet(self.teamList)
         for team in teamList:
             rs.setRating(team,0)
+        rs.evaluateProbability(self.gamesList)
         self.pool = [rs]
-        self.pool = self.gamesList.evaluateProbability(rs)
-        for i in range(1,PARENTS):
+        for i in range(1,TOTAL_SIZE):
             newRs = rs.spawn()
             newRs.evaluateProbability(self.gamesList)
             self.pool.append(newRs)
+        self.sortPool()
 
     def gradeNewMembers(self):
         for i in range(PARENTS,TOTAL_SIZE):
@@ -197,18 +199,24 @@ class RatingSetPool:
         return iter(self.pool)
 
     def nextGeneration(self):
-        self.spawnNewMemebers()
+        self.spawnNewMembers()
         self.gradeNewMembers()
         self.sortPool()
 
 
-if __name__ == '__main__':
-    fbs = TeamList('1A.txt')
-    fcs = TeamList('1AA.txt')
-    div1 = fbs.merge(fcs)
+def run():
+    # fbs = TeamList('1A.txt')
+    # fcs = TeamList('1AA.txt')
+    # div1 = fbs.merge(fcs)
+    # gl = GamesList('scores.txt',div1)
+    div1 = TeamList('1A.txt')
     gl = GamesList('scores.txt',div1)
     rsp = RatingSetPool(div1,gl)
     for i in range(0,GENERATIONS):
         rsp.nextGeneration()
     rs = rsp.pool[0]
     rs.print()
+
+
+if __name__ == '__main__':
+    run()
