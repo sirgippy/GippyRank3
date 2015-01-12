@@ -5,14 +5,14 @@ from math import log2, pow
 from operator import itemgetter
 
 
-PARENTS = 50
-SPAWN = 1
+PARENTS = 5
+SPAWN = 2
 TOTAL_SIZE = PARENTS * (1 + SPAWN)
 
 GENERATIONS = 100
 
-VOLATILITY = 0.25
-MUTATION_RATE = 0.1
+VOLATILITY = 3
+MUTATION_RATE = 0.2
 
 HOME_FIELD_ADVANTAGE = 0.3
 HFA_FACTOR = log2(1 + HOME_FIELD_ADVANTAGE)
@@ -96,7 +96,7 @@ class RatingSet:
 
     def spawn(self):
         newSet = RatingSet(self.teams)
-        newSet.ratings = self.ratings
+        newSet.ratings = self.ratings.copy()
         for team in self.teams:
             if random.random() < MUTATION_RATE:
                 newSet.ratings[team] = self.ratings[team] + random.normal(0, VOLATILITY)
@@ -116,8 +116,9 @@ class RatingSet:
 class GamesList:
     def __init__(self,file=None,tl=None):
         games = []
+        ii = 0
         if file is not None:
-            with open(file,'r') as scoresFile:
+            with open(file,'r',encoding='utf-8') as scoresFile:
                 for line in scoresFile:
                     awayTeam = line[10:38].strip()
                     awayScore = int(line[38:40].strip())
@@ -176,8 +177,7 @@ class RatingSetPool:
         for team in teamList:
             rs.setRating(team,0)
         rs.evaluateProbability(self.gamesList)
-        self.pool = [rs]
-        for i in range(1,TOTAL_SIZE):
+        for i in range(0,TOTAL_SIZE):
             newRs = rs.spawn()
             newRs.evaluateProbability(self.gamesList)
             self.pool.append(newRs)

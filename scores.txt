@@ -4168,3 +4168,53 @@
 06-Dec-14 Liberty                     22 Villanova                   29
 06-Dec-14 Hobart                      13 Wesley                      41
 06-Dec-14 Linfield                    45 Widener                      7
+12-Dec-14 Chattanooga                 30 New Hampshire               35
+13-Dec-14 West Georgia                 7 Colorado St-Pueblo          10
+13-Dec-14 Illinois St                 59 Eastern Washington          46
+13-Dec-14 Concord                     13 Minn St-Mankato             47
+13-Dec-14 Wesley                      21 Mount Union                 70
+13-Dec-14 Army                        10 Navy                        17 Baltimore MD
+13-Dec-14 Coastal Carolina            32 North Dakota St             39
+13-Dec-14 Linfield                    14 UW-Whitewater               20
+13-Dec-14 Sam Houston St              34 Villanova                   31
+19-Dec-14 Southern Oregon             55 Marian IN                   31 Daytona Beach FL
+19-Dec-14 UW-Whitewater               43 Mount Union                 34 Salem VA
+19-Dec-14 Sam Houston St               3 North Dakota St             35
+20-Dec-14 Western Michigan            24 Air Force                   38 Boise ID
+20-Dec-14 Nevada                       3 Louisiana-Lafayette         16 New Orleans LA
+20-Dec-14 Colorado St-Pueblo          13 Minn St-Mankato              0 Kansas City KS
+20-Dec-14 Illinois St                 21 New Hampshire               18
+20-Dec-14 Bowling Green               33 South Alabama               28 Montgomery AL
+20-Dec-14 Colorado St                 10 Utah                        45 Las Vegas NV
+20-Dec-14 Utah St                     21 UTEP                         6 Albuquerque NM
+22-Dec-14 Brigham Young               48 Memphis                     55 Miami FL
+23-Dec-14 Northern Illinois           23 Marshall                    52 Boca Raton FL
+23-Dec-14 Navy                        17 San Diego St                16
+24-Dec-14 Rice                        30 Fresno St                    6 Honolulu HI
+24-Dec-14 Central Michigan            48 Western Kentucky            49 Nassau BA
+26-Dec-14 North Carolina St           34 Central Florida             27 St Petersburg FL
+26-Dec-14 Illinois                    18 Louisiana Tech              35 Dallas TX
+26-Dec-14 North Carolina              21 Rutgers                     40 Detroit MI
+27-Dec-14 Duke                        31 Arizona St                  36 El Paso TX
+27-Dec-14 Penn State                  31 Boston College              30 Bronx NY
+27-Dec-14 Miami FL                    21 South Carolina              24 Shreveport LA
+27-Dec-14 Nebraska                    42 Southern Cal                45 San Diego CA
+27-Dec-14 Cincinnati                  17 Virginia Tech               33 Annapolis MD
+29-Dec-14 Oklahoma                     6 Clemson                     40 Orlando FL
+29-Dec-14 Arkansas                    31 Texas                        7 Houston TX
+29-Dec-14 West Virginia               37 Texas A&M                   45 Memphis TN
+30-Dec-14 Louisville                  14 Georgia                     37 Charlotte NC
+30-Dec-14 LSU                         28 Notre Dame                  31 Nashville TN
+30-Dec-14 Maryland                    21 Stanford                    45 Santa Clara CA
+31-Dec-14 Boise St                    38 Arizona                     30 Glendale AZ
+31-Dec-14 Mississippi St              34 Georgia Tech                49 Miami Gardens FL
+31-Dec-14 TCU                         42 Mississippi                  3 Atlanta GA
+01-Jan-15 Ohio State                  42 Alabama                     35 New Orleans LA
+01-Jan-15 Wisconsin                   34 Auburn                      31 Tampa FL
+01-Jan-15 Michigan St                 42 Baylor                      41 Arlington TX
+01-Jan-15 Minnesota                   17 Missouri                    33 Orlando FL
+01-Jan-15 Florida St                  20 Oregon                      59 Pasadena CA
+02-Jan-15 Pittsburgh                  34 Houston                     35 Fort Worth TX
+02-Jan-15 UCLA                        40 Kansas St                   35 San Antonio
+02-Jan-15 Washington                  22 Oklahoma St                 30 Tempe AZ
+02-Jan-15 Iowa                        28 Tennessee                   45 Jacksonville FL
