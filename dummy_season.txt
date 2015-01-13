@@ -1,0 +1,6 @@
+23-Aug-14 Auburn                      30 Alabama                     20
+23-Aug-14 Ole Miss                    20 Auburn                      30
+23-Aug-14 Auburn                      30 Mississippi St              20
+23-Aug-14 Alabama                     30 Ole Miss                    20
+23-Aug-14 Mississippi St              20 Alabama                     30
+23-Aug-14 Ole Miss                    30 Mississippi St              20

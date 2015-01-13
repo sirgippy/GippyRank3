@@ -5,13 +5,13 @@ from math import log2, pow
 from operator import itemgetter
 
 
-PARENTS = 5
-SPAWN = 2
+PARENTS = 100
+SPAWN = 3
 TOTAL_SIZE = PARENTS * (1 + SPAWN)
 
-GENERATIONS = 100
+GENERATIONS = 200
 
-VOLATILITY = 3
+VOLATILITY = 1
 MUTATION_RATE = 0.2
 
 HOME_FIELD_ADVANTAGE = 0.3
