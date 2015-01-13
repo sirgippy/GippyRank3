@@ -4218,3 +4218,7 @@
 02-Jan-15 UCLA                        40 Kansas St                   35 San Antonio
 02-Jan-15 Washington                  22 Oklahoma St                 30 Tempe AZ
 02-Jan-15 Iowa                        28 Tennessee                   45 Jacksonville FL
+03-Jan-15 East Carolina               20 Florida                     28 Birmingham AL
+04-Jan-15 Toledo                      63 Arkansas St                 44 Mobile AL
+10-Jan-15 North Dakota St             29 Illinois St                 27 Frisco TX
+12-Jan-15 Oregon                      20 Ohio State                  42 Arlington TX

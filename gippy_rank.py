@@ -3,16 +3,21 @@ __author__ = 'SirGippy'
 from numpy import random
 from math import log2, pow
 from operator import itemgetter
-
+from csv import reader
 
 PARENTS = 100
 SPAWN = 3
 TOTAL_SIZE = PARENTS * (1 + SPAWN)
 
-GENERATIONS = 200
+GENERATIONS = 10
 
-VOLATILITY = 1
-MUTATION_RATE = 0.2
+HIGH_VOLATILITY = 1
+MID_VOLATILITY = 0.25
+LOW_VOLATILITY = 0.025
+HIGH_RATE = 0.002
+MID_RATE = 0.05
+LOW_RATE = 0.5
+
 
 HOME_FIELD_ADVANTAGE = 0.3
 HFA_FACTOR = log2(1 + HOME_FIELD_ADVANTAGE)
@@ -98,8 +103,13 @@ class RatingSet:
         newSet = RatingSet(self.teams)
         newSet.ratings = self.ratings.copy()
         for team in self.teams:
-            if random.random() < MUTATION_RATE:
-                newSet.ratings[team] = self.ratings[team] + random.normal(0, VOLATILITY)
+            tmp = random.random()
+            if tmp < HIGH_RATE:
+                newSet.ratings[team] = self.ratings[team] + random.normal(0, HIGH_VOLATILITY)
+            elif tmp < MID_RATE:
+                newSet.ratings[team] = self.ratings[team] + random.normal(0, MID_VOLATILITY)
+            elif tmp < LOW_RATE:
+                newSet.ratings[team] = self.ratings[team] + random.normal(0, LOW_VOLATILITY)
         return newSet
 
     def evaluateProbability(self,gamesList):
@@ -109,8 +119,9 @@ class RatingSet:
 
     def print(self):
         sortedRatings = sorted(self.ratings.items(), key=itemgetter(1), reverse=True)
-        for rating in sortedRatings:
-            print(rating[0] + ' ' + "{:.3f}".format(rating[1]))
+        for (rank,rating) in zip(range(1,26),sortedRatings):
+            print(str(rank) + ' ' + rating[0] + ' ' + "{:.3f}".format(rating[1]))
+        print('Score: ' + "{:.3f}".format(self.score))
 
 
 class GamesList:
@@ -169,19 +180,32 @@ class TeamList:
 
 
 class RatingSetPool:
-    def __init__(self,teamList,gamesList):
+    def __init__(self,teamList,gamesList,csv=None):
         self.pool = []
         self.teamList = teamList
         self.gamesList = gamesList
-        rs = RatingSet(self.teamList)
-        for team in teamList:
-            rs.setRating(team,0)
-        rs.evaluateProbability(self.gamesList)
-        for i in range(0,TOTAL_SIZE):
-            newRs = rs.spawn()
-            newRs.evaluateProbability(self.gamesList)
-            self.pool.append(newRs)
-        self.sortPool()
+
+        if csv == None:
+            rs = RatingSet(self.teamList)
+            for team in teamList:
+                rs.setRating(team,0)
+            rs.evaluateProbability(self.gamesList)
+            for i in range(0,TOTAL_SIZE):
+                newRs = rs.spawn()
+                newRs.evaluateProbability(self.gamesList)
+                self.pool.append(newRs)
+            self.sortPool()
+        else:
+            with open(csv) as f:
+                f_csv = reader(f)
+                headers = next(f_csv)
+                for row in f_csv:
+                    rs = RatingSet(self.teamList)
+                    rs.score = float(row[0])
+                    row.pop(0)
+                    for (element,team) in zip(row,self.teamList):
+                        rs.setRating(team,float(element))
+                    self.pool.append(rs)
 
     def gradeNewMembers(self):
         for i in range(PARENTS,TOTAL_SIZE):
@@ -203,6 +227,25 @@ class RatingSetPool:
         self.gradeNewMembers()
         self.sortPool()
 
+    def to_csv(self,filename):
+        with open(filename, 'w', newline='') as csvfile:
+            csvfile.write('score')
+            for team in self.teamList:
+                csvfile.write(','+team)
+            csvfile.write('\n')
+
+            for rs in self.pool:
+                csvfile.write(str(rs.score))
+                for team in self.teamList:
+                    csvfile.write(','+str(rs.ratings[team]))
+                csvfile.write('\n')
+
+    def age(self,generations):
+        for i in range(0,generations):
+            self.nextGeneration()
+        print('OK!')
+
+
 
 def run():
     # fbs = TeamList('1A.txt')
@@ -210,13 +253,17 @@ def run():
     # div1 = fbs.merge(fcs)
     # gl = GamesList('scores.txt',div1)
     div1 = TeamList('1A.txt')
-    gl = GamesList('scores.txt',div1)
-    rsp = RatingSetPool(div1,gl)
+    div2 = TeamList('1AA.txt')
+    tl = div1.merge(div2)
+    gl = GamesList('scores.txt',tl)
+    rsp = RatingSetPool(tl,gl,'ratings2.csv')
     for i in range(0,GENERATIONS):
         rsp.nextGeneration()
     rs = rsp.pool[0]
     rs.print()
+    rsp.to_csv('ratings2.csv')
 
 
 if __name__ == '__main__':
-    run()
+    while True:
+        run()
